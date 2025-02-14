@@ -1,10 +1,12 @@
 import pandas as pandas
 import numpy as np
+import socket
+import struct
 from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import MinMaxScaler, OrdinalEncoder
 
 # Load the data
-file1 = pandas.read_csv("Data for ML/UNSW-NB15/UNSW-NB15_1.csv", header=None)
+file1 = pandas.read_csv("Data for ML/UNSW-NB15/UNSW-NB15_1.csv", header=None) 
 file2 = pandas.read_csv("Data for ML/UNSW-NB15/UNSW-NB15_2.csv", header=None)
 file3 = pandas.read_csv("Data for ML/UNSW-NB15/UNSW-NB15_3.csv", header=None)
 file4 = pandas.read_csv("Data for ML/UNSW-NB15/UNSW-NB15_4.csv", header=None)
@@ -47,9 +49,16 @@ unchanged_Data = total_Dataset[unchanged_Columns].values
 total_Encoded_Data = np.concatenate((unchanged_Data, encoded_Data), axis=1)
 total_Encoded_Columns = unchanged_Columns + ordinal_Columns
 
-total_DataFrame = pandas.DataFrame(total_Encoded_Data, columns=total_Encoded_Columns)
+def IpToInt(ip):
+    packed_ip = socket.inet_aton(ip)
+    ip_int = struct.unpack("!I", packed_ip)[0]
+    return int(ip_int)
 
-columns_To_Normalise = [col for col in total_DataFrame.columns if col != 'is_sm_ips_ports' and col != 'srcip' and col != 'dstip' and col != 'attack_cat']
+total_DataFrame = pandas.DataFrame(total_Encoded_Data, columns=total_Encoded_Columns)
+total_DataFrame['srcip'] = total_DataFrame['srcip'].apply(IpToInt)
+total_DataFrame['dstip'] = total_DataFrame['dstip'].apply(IpToInt)
+
+columns_To_Normalise = [col for col in total_DataFrame.columns if col != 'is_sm_ips_ports' and col != 'attack_cat']
 total_DataFrame[columns_To_Normalise] = MinMaxScaler().fit_transform(total_DataFrame[columns_To_Normalise])
 
 total_DataFrame.to_csv('Data for ML/UNSW-NB15/UNSW-NB15_DataFrame.csv', index=False)

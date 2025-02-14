@@ -14,11 +14,10 @@ import matplotlib.backends.backend_agg as agg
 trainingData = pandas.read_csv("Data for ML/UNSW-NB15/UNSW-NB15_DataFrame.csv")
 
 # Define the inputs and targets
-input = trainingData.drop(['IPV4_SRC_ADDR', 'IPV4_DST_ADDR','Label', 'Attack'], axis=1)
 target = trainingData['attack_cat'].values.astype(float)
 
 # Data split
-input_training, input_test, target_training, target_test = train_test_split(input, target, test_size=0.1, random_state=42)
+input_training, input_test, target_training, target_test = train_test_split(trainingData.drop(columns='attack_cat'), target, test_size=0.1, random_state=42)
 
 # Use SMOTE to balance
 smote = SMOTE(sampling_strategy='auto', random_state=42)
