@@ -49,7 +49,7 @@ for i in range(5):
     old_test_input = input_test
     old_test_target = target_test
     ran_state_val = random.randint(30, 70)
-    input_training, input_test, target_training, target_test = train_test_split(input, target, test_size=0.2, random_state=ran_state_val)
+    input_training, input_test, target_training, target_test = train_test_split(trainingData.drop(columns='attack_cat'), target, test_size=0.1, random_state=ran_state_val)
     
 #Overall statistics
 AllAttacks = np.concatenate(AllAttacks, axis=0)
