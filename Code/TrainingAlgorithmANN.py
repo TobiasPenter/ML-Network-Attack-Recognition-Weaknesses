@@ -72,7 +72,9 @@ pickle.dump(MLPAttackClassifier, open("Models/MLPModel.pk1", 'wb'))
 shap.initjs()
 
 #Make explainer
-explainer = shap.KernelExplainer(MLPAttackClassifier.predict, input_test)
+background_sample = shap.sample(input_test, 10000)
+
+explainer = shap.KernelExplainer(MLPAttackClassifier.predict, background_sample)
 
 shap_values = explainer.shap_values(input_test)
 

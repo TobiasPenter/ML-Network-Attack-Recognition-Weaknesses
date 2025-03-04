@@ -78,7 +78,8 @@ pickle.dump(KNNAttackClassifier, open("Models/KNNModel.pk1", 'wb'))
 shap.initjs()
 
 #Make explainer
-explainer = shap.KernelExplainer(KNNAttackClassifier.predict, input_test)
+background_sample = shap.sample(input_test, 10000)
+explainer = shap.KernelExplainer(KNNAttackClassifier.predict, background_sample)
 
 shap_values = explainer.shap_values(input_test)
 
