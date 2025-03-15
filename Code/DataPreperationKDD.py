@@ -19,6 +19,11 @@ total_Dataset = pandas.concat([file1, file2])
 
 total_Dataset.columns = columns
 
+total_Dataset["class"] = total_Dataset["class"].replace(["apache2", "mailbomb", "processtable", "udpstorm", "back", "land", "neptune", "pod", "teardrop", "smurf"], "dos")
+total_Dataset["class"] = total_Dataset["class"].replace(["httptunnel", "xterm", "ps", "sqlattack", "saint", "mscan", "buffer_overflow", "loadmodule", "perl", "rootkit"], "u2r")
+total_Dataset["class"] = total_Dataset["class"].replace(["named", "sendmail", "snmpgetattack", "snmpguess", "worm", "xsnoop", "xlock", "ftp_write", "guess_passwd", "imap", "multihop", "phf", "spy", "warezclient", "warezmaster"], "r2l")
+total_Dataset["class"] = total_Dataset["class"].replace(["ipsweep", "nmap", "portsweep", "satan"], "probe")
+
 total_Dataset.to_csv('Data for ML/NSL-KDD/KDD.csv')
 
 # NEncoding ordinal collumns
@@ -26,6 +31,8 @@ protocolType_Categories = total_Dataset["protocol_type"].unique()
 service_Categories = total_Dataset["service"].unique()
 flag_Categories = total_Dataset["flag"].unique()
 class_Categories = total_Dataset["class"].unique()
+
+print(total_Dataset["class"].unique())
 
 ordinal_Categories = [protocolType_Categories, service_Categories, flag_Categories, class_Categories]
 
