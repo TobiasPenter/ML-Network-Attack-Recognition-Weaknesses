@@ -22,6 +22,7 @@ corr_with_target = corr_matrix['class']
 k = 30
 top_k = corr_with_target.abs().sort_values(ascending=False)[:k].index
 selected_features = trainingData[top_k]
+print(selected_features.columns)
 
 selected_DF = trainingData[selected_features.columns]
 target = selected_DF['class']
@@ -73,38 +74,3 @@ print("Total Accuracy Score: ",accuracy,"\nTotal Precision Score: ", precision,"
 
 #Save model
 pickle.dump(KNNAttackClassifier, open("Models/KNNModel.pk1", 'wb'))
-
-#Initialise shap plot
-shap.initjs()
-
-#Make explainer
-background_sample = shap.sample(input_test, 10000)
-explainer = shap.KernelExplainer(KNNAttackClassifier.predict, background_sample)
-
-shap_values = explainer.shap_values(input_test)
-
-shap_values = np.transpose(shap_values, (2,0,1))
-
-#Shape values for each class
-for i, class_shap_values in enumerate(shap_values):
-    print(f"Generating summary plot for class {i}")
-    summary_plot = shap.summary_plot(class_shap_values, input_test, feature_names=input_test.columns, show=False)
-    
-    fig = plt.gcf()
-
-    #Use agg backend to save it as PNG
-    png_file_path = f"Explainer Charts/Summary/On Build/Model 2/shap_plot_class{i}.png"
-    agg_backend = agg.FigureCanvasAgg(fig)
-    agg_backend.print_png(png_file_path)
-    plt.close(fig)
-
-#Shap values for 10 different predicitons
-for j in range (10):
-    instance = random.randint(0, len(input_test) - 1)
-
-    for i, class_shap_values in enumerate(shap_values):  
-        shap_instance = class_shap_values[instance]
-        print(f"Generating plot for instance {instance}, class {i}")
-        force_plot = shap.force_plot(explainer.expected_value[i], shap_instance, input_test.iloc[instance].values, feature_names=input_test.columns, show=False)
-
-        shap.save_html(f"Explainer Charts/Instances/On Build/Model 2/Iteration {j}/shap_plot_class{i}_instance{instance}.html", force_plot)

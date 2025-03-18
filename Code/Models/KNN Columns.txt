@@ -1,0 +1,10 @@
+'class', 'dst_host_srv_count', 'logged_in', 'dst_host_diff_srv_rate',
+       'dst_host_same_srv_rate', 'diff_srv_rate', 'flag',
+       'dst_host_srv_rerror_rate', 'same_srv_rate', 'rerror_rate',
+       'srv_rerror_rate', 'dst_host_same_src_port_rate',
+       'dst_host_rerror_rate', 'dst_host_srv_diff_host_rate', 'count',
+       'dst_host_srv_serror_rate', 'protocol_type', 'dst_host_serror_rate',
+       'serror_rate', 'srv_serror_rate', 'service', 'duration',
+       'dst_host_count', 'srv_diff_host_rate', 'srv_count',
+       'num_failed_logins', 'is_guest_login', 'num_access_files',
+       'wrong_fragment', 'num_shells'

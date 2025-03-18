@@ -6,9 +6,6 @@ from lightgbm import LGBMClassifier
 from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error, mean_squared_error, precision_score, r2_score, recall_score
 import pickle
 from imblearn.over_sampling import ADASYN
-import shap
-import matplotlib.pyplot as plt
-import matplotlib.backends.backend_agg as agg
 
 # Load data
 trainingData = pandas.read_csv("Data for ML/UNSW-NB15/UNSW-NB15_DataFrame.csv")
@@ -23,8 +20,8 @@ input_training, input_test, target_training, target_test = train_test_split(trai
 ada = ADASYN(random_state=42)
 input_training, target_training = ada.fit_resample(input_training, target_training)
 
-input_training.columns = input_training.columns.str.replace(" ", "_")
-input_test.columns = input_test.columns.str.replace(" ", "_")
+input_training.columns = input_training.columns.str.replace(" ", "0")
+input_test.columns = input_test.columns.str.replace(" ", "0")
 
 # Model creation
 num_classes = len(np.unique(target))
@@ -71,39 +68,3 @@ print("Total Accuracy Score: ",accuracy,"\nTotal Precision Score: ", precision,"
 
 #Save model
 pickle.dump(LightGBM, open("Models/LightGBM.pk1", 'wb'))
-
-#Initialise shap plot
-shap.initjs()
-
-#Make explainer
-background_sample = shap.sample(input_test, 10000)
-
-explainer = shap.TreeExplainer(LightGBM.predict, background_sample)
-
-shap_values = explainer.shap_values(input_test)
-
-shap_values = np.transpose(shap_values, (2,0,1))
-
-#Shape values for each class
-for i, class_shap_values in enumerate(shap_values):
-    print(f"Generating summary plot for class {i}")
-    summary_plot = shap.summary_plot(class_shap_values, input_test, feature_names=input_test.columns, show=False)
-    
-    fig = plt.gcf()
-
-    #Use agg backend to save it as PNG
-    png_file_path = f"Explainer Charts/Summary/On Build/Model 3/shap_plot_class{i}.png"
-    agg_backend = agg.FigureCanvasAgg(fig)
-    agg_backend.print_png(png_file_path)
-    plt.close(fig)
-
-#Shap values for 10 different predicitons
-for j in range (10):
-    instance = random.randint(0, len(input_test) - 1)
-
-    for i, class_shap_values in enumerate(shap_values):  
-        shap_instance = class_shap_values[instance]
-        print(f"Generating plot for instance {instance}, class {i}")
-        force_plot = shap.force_plot(explainer.expected_value[i], shap_instance, input_test.iloc[instance].values, feature_names=input_test.columns, show=False)
-
-        shap.save_html(f"Explainer Charts/Instances/On Build/Model 3/Iteration {j}/shap_plot_class{i}_instance{instance}.html", force_plot)
