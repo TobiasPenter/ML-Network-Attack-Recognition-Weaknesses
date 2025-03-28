@@ -119,20 +119,35 @@ fileCIC.to_csv('Data for ML/CIC/CICDatasetCombined.csv')
 fileCIC['attack_cat'] = fileCIC['attack_cat'].str.strip()
 
 categoryMapping = {
-    'Benign': 'Unknown',
-    'FTP-BruteForce': 'Fuzzers',
-    'SSH-Bruteforce': 'Fuzzers',
-    'DoS attacks-GoldenEye': 'DoS',
-    'DoS attacks-Slowloris': 'DoS',
-    'DoS attacks-SlowHTTPTest': 'DoS',
-    'DoS attacks-Hulk': 'DoS',
-    'DDOS attack-LOIC-UDP': 'DoS',
-    'DDOS attack-HOIC': 'DoS',
-    'Brute Force -Web': 'Fuzzers',
-    'Brute Force -XSS': 'Exploits',
-    'SQL Injection': 'Exploits',
-    'Infilteration': 'Backdoor',
-    'Bot': 'Worms'
+    "BENIGN": "Unknown",
+    "Benign": "Unknown",
+    "DDoS": "DoS",
+    "PortScan": "Reconnaissance",
+    "Bot": "Worms",
+    "Infiltration": "Backdoor",
+    "Infilteration": "Backdoor",
+    "Web Attack \x96 Brute Force": "Exploits",
+    "Brute Force -Web": "Exploits",
+    "Web Attack \x96 XSS": "Exploits",
+    "Brute Force -XSS": "Exploits",
+    "Web Attack \x96 Sql Injection": "Exploits",
+    "SQL Injection": "Exploits",
+    "FTP-Patator": "Fuzzers",
+    "FTP-BruteForce": "Fuzzers",
+    "SSH-Patator": "Fuzzers",
+    "SSH-Bruteforce": "Fuzzers",
+    "DoS slowloris": "DoS",
+    "DoS attacks-Slowloris": "DoS",
+    "DoS Slowhttptest": "DoS",
+    "DoS attacks-SlowHTTPTest": "DoS",
+    "DoS Hulk": "DoS",
+    "DoS attacks-Hulk": "DoS",
+    "DoS GoldenEye": "DoS",
+    "DoS attacks-GoldenEye": "DoS",
+    "Heartbleed": "Shellcode",
+    "DDOS attack-LOIC-UDP": "DoS",
+    "DDOS attack-HOIC": "DoS",
+    "Brute Force": "Fuzzers"
 }
 
 fileCIC['attack_cat'] = fileCIC['attack_cat'].replace(categoryMapping)
@@ -143,7 +158,9 @@ attackEncoder = {
     'DoS': 3,
     'Exploits': 1,
     'Backdoor': 8,
-    'Worms': 7
+    'Worms': 7,
+    'Reconnaissance': 2,
+    'Shellcode': 5
 }
 
 fileCIC['attack_cat'] = fileCIC['attack_cat'].replace(attackEncoder)
@@ -157,6 +174,7 @@ fileCIC.dropna(inplace=True)
 fileCIC[columnsToNormalise] = MinMaxScaler().fit_transform(fileCIC[columnsToNormalise])
 
 print(fileCIC.shape)
+print(fileCIC['attack_cat'].unique())
 
 fileCIC.to_csv('Data for ML/CIC/CIC_DataFrame.csv', index=False)
 print("Data Preped")
