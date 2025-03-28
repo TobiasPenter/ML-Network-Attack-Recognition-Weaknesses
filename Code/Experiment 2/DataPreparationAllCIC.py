@@ -1,12 +1,14 @@
 import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
 
 file2017 = pd.read_csv("Data for ML/CIC/CIC-IDS2017.csv")
 file2018 = pd.read_csv("Data for ML/CIC/CIC-IDS2018.csv")
 
 file2017.columns = file2017.columns.str.strip()
 
-columnsToDrop = ['Flow ID', 'Source IP', 'Source Port', 'Destination IP', 'Fwd Header Length.1']
-file2017 = file2017.drop(columns=columnsToDrop, inplace=True)
+columnsToDrop = ['Flow ID', 'Source Port', 'Source IP', 'Destination IP', 'Fwd Header Length.1']
+file2017 = file2017.drop(columns=columnsToDrop)
 
 renameMapping = {
     'Dst Port': 'Destination Port',
@@ -54,7 +56,12 @@ renameMapping = {
     'Fwd Blk Rate Avg': 'Fwd Avg Bulk Rate',
     'Bwd Byts/b Avg': 'Bwd Avg Bytes/Bulk',
     'Bwd Pkts/b Avg': 'Bwd Avg Packets/Bulk',
-    'Bwd Blk Rate Avg': 'Bwd Avg Bulk Rate'
+    'Bwd Blk Rate Avg': 'Bwd Avg Bulk Rate',
+    'Subflow Fwd Byts': 'Subflow Fwd Bytes',
+    'Subflow Bwd Byts': 'Subflow Bwd Bytes',
+    'Subflow Fwd Pkts': 'Subflow Fwd Packets',
+    'Subflow Bwd Pkts': 'Subflow Bwd Packets'
+    
 }
 
 file2018.rename(columns=renameMapping, inplace=True)
@@ -62,17 +69,94 @@ file2018.columns = file2018.columns.str.strip()
 
 fileCIC = pd.concat([file2017, file2018])
 
-extra_columns = set(fileCIC.columns) - set(file2018.columns)
-print("Extra columns in fileCIC:", extra_columns)
-
-fileCIC.drop(columns=extra_columns, inplace=True)
-
-print(fileCIC.shape)
-print(fileCIC.columns)
-print("\n\n\n")
-print(file2018.shape)
-print(file2018.columns)
-
 fileCIC.columns = file2018.columns
 
+columnsToDrop = ['Unnamed: 0', 'Timestamp', 'Fwd Packet Length Max', 'Fwd Packet Length Min', 
+    'Fwd Packet Length Std', 'Bwd Packet Length Max', 'Bwd Packet Length Min', 
+    'Bwd Packet Length Std', 'Flow Packets/s', 'Flow IAT Std', 'Flow IAT Max', 
+    'Flow IAT Min', 'Fwd IAT Total', 'Fwd IAT Std', 'Fwd IAT Max', 'Fwd IAT Min', 
+    'Bwd IAT Total', 'Bwd IAT Std', 'Bwd IAT Max', 'Bwd IAT Min', 'Fwd PSH Flags', 
+    'Bwd PSH Flags', 'Fwd URG Flags', 'Bwd URG Flags', 'Fwd Header Length', 
+    'Bwd Header Length', 'Fwd Packets/s', 'Bwd Packets/s', 'Min Packet Length', 
+    'Max Packet Length', 'Packet Length Std', 'Packet Length Variance', 'FIN Flag Count', 
+    'SYN Flag Count', 'RST Flag Count', 'PSH Flag Count', 'ACK Flag Count', 'URG Flag Count', 
+    'CWE Flag Count', 'ECE Flag Count', 'Down/Up Ratio', 'Average Packet Size', 
+    'Avg Fwd Segment Size', 'Avg Bwd Segment Size', 'Fwd Avg Bytes/Bulk', 'Fwd Avg Packets/Bulk', 
+    'Fwd Avg Bulk Rate', 'Bwd Avg Bytes/Bulk', 'Bwd Avg Packets/Bulk', 'Bwd Avg Bulk Rate', 
+    'Subflow Fwd Packets', 'Subflow Fwd Bytes', 'Subflow Bwd Packets', 'Subflow Bwd Bytes', 
+    'act_data_pkt_fwd', 'min_seg_size_forward', 'Active Std', 'Active Max', 'Active Min', 
+    'Idle Mean', 'Idle Std', 'Idle Max', 'Idle Min', 'Packet Length Mean']
+
+fileCIC = fileCIC.drop(columns=columnsToDrop)
+
+renameMapping = {
+    'Destination Port': 'dsport',
+    'Protocol': 'proto',
+    'Flow Duration': 'dur',
+    'Total Fwd Packets': 'Spkts',
+    'Total Backward Packets': 'Dpkts',
+    'Total Length of Fwd Packets': 'sbytes',
+    'Total Length of Bwd Packets': 'dbytes',
+    'Fwd Packet Length Mean': 'smeansz',
+    'Bwd Packet Length Mean': 'dmeansz',
+    'Flow Bytes/s': 'Flow Bytes/s',
+    'Flow IAT Mean': 'Flow IAT Mean',
+    'Fwd IAT Mean': 'Sintpkt',
+    'Bwd IAT Mean': 'Dintpkt',
+    'Init_Win_bytes_forward': 'swin',
+    'Init_Win_bytes_backward': 'dwin',
+    'Active Mean': 'tcprtt',
+    'Label': 'attack_cat'
+}
+
+fileCIC.rename(columns=renameMapping, inplace=True)
+
+columnOrder = ['dsport', 'dur', 'sbytes', 'dbytes', 'Spkts', 'Dpkts', 'swin', 'dwin', 'smeansz', 'dmeansz', 'Sintpkt', 'Dintpkt', 'Flow IAT Mean', 'Flow Bytes/s', 'tcprtt', 'attack_cat', 'proto']
+fileCIC = fileCIC[columnOrder]
+
 fileCIC.to_csv('Data for ML/CIC/CICDatasetCombined.csv')
+
+fileCIC['attack_cat'] = fileCIC['attack_cat'].str.strip()
+
+categoryMapping = {
+    'Benign': 'Unknown',
+    'FTP-BruteForce': 'Fuzzers',
+    'SSH-Bruteforce': 'Fuzzers',
+    'DoS attacks-GoldenEye': 'DoS',
+    'DoS attacks-Slowloris': 'DoS',
+    'DoS attacks-SlowHTTPTest': 'DoS',
+    'DoS attacks-Hulk': 'DoS',
+    'DDOS attack-LOIC-UDP': 'DoS',
+    'DDOS attack-HOIC': 'DoS',
+    'Brute Force -Web': 'Fuzzers',
+    'Brute Force -XSS': 'Exploits',
+    'SQL Injection': 'Exploits',
+    'Infilteration': 'Backdoor',
+    'Bot': 'Worms'
+}
+
+fileCIC['attack_cat'] = fileCIC['attack_cat'].replace(categoryMapping)
+
+attackEncoder = {
+    'Unknown': 0,
+    'Fuzzers': 6,
+    'DoS': 3,
+    'Exploits': 1,
+    'Backdoor': 8,
+    'Worms': 7
+}
+
+fileCIC['attack_cat'] = fileCIC['attack_cat'].replace(attackEncoder)
+
+columnsToNormalise = [col for col in fileCIC.columns if col != 'attack_cat']
+
+fileCIC[columnsToNormalise] = fileCIC[columnsToNormalise].apply(pd.to_numeric, errors='coerce')
+fileCIC.replace([np.inf, -np.inf], np.nan, inplace=True)
+fileCIC.dropna(inplace=True)
+
+fileCIC[columnsToNormalise] = MinMaxScaler().fit_transform(fileCIC[columnsToNormalise])
+
+print(fileCIC.shape)
+
+fileCIC.to_csv('Data for ML/CIC/CIC_DataFrame.csv', index=False)
+print("Data Preped")

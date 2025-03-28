@@ -1,7 +1,5 @@
 import pandas as pandas
 import numpy as np
-import socket
-import struct
 from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import MinMaxScaler, OrdinalEncoder
 
@@ -23,7 +21,14 @@ totalDataset = pandas.concat([file1, file2, file3, file4])
 
 totalDataset.columns = columns
 
-columnsToDrop = ['state', 'srcip', 'sport', 'dstip', 'state', 'sttl', 'dttl', 'sloss', 'dloss', 'service', 'stcpb', 'dtcpb', 'trans_depth', 'res_bdy_len', 'tcprtt', 'is_sm_ips_ports', 'is_sm_ips_ports', 'ct_state_ttl', 'ct_flw_http_mthd', 'is_ftp_login', 'ct_ftp_cmd', 'ct_srv_src', 'ct_srv_dst', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm']
+totalDataset['Flow IAT Mean'] = totalDataset['Sjit'] + totalDataset['Djit']
+totalDataset['Flow Bytes/s'] = totalDataset['Sload'] + totalDataset['Dload']
+
+columnsToDrop = ["srcip", "sport", "dstip", "state", "sloss", "dloss", "service", 
+    "trans_depth", "res_bdy_len", "Ltime", "Stime", "synack", "ackdat", 
+    "is_sm_ips_ports", "ct_flw_http_mthd", "is_ftp_login", "ct_ftp_cmd", 
+    "ct_srv_src", "ct_srv_dst", "ct_dst_ltm", "ct_src_ ltm", "ct_src_dport_ltm", 
+    "ct_dst_sport_ltm", "ct_dst_src_ltm", 'Sjit', 'Djit', 'Sload', 'Dload']
 
 totalDataset.drop(columns=columnsToDrop)
 
@@ -33,19 +38,22 @@ totalDataset.to_csv('Data for ML/UNSW-NB15/UNSW-NB15_DataSet.csv')
 totalDataset["attack_cat"] = totalDataset["attack_cat"].fillna("Unknown")
 totalDataset["dsport"] = pandas.to_numeric(totalDataset['dsport'], errors='coerce').fillna(0).astype(int)
 
-# Not encoding "proto" or "sevices" as they were not used in the model I am replicating
+totalDataset['attack_cat'] = totalDataset['attack_cat'].str.strip()
+totalDataset['attack_cat'] = totalDataset['attack_cat'].replace('Backdoors', 'Backdoor')
 attackCategories = totalDataset["attack_cat"].unique()
+protoCategories = totalDataset["proto"].unique()
 
-ordinalCategories = [attackCategories]
+print(attackCategories)
 
-ordinalColumns = ["attack_cat"]
+ordinalCategories = [attackCategories, protoCategories]
+
+ordinalColumns = ["attack_cat", "proto"]
 
 encoder = make_column_transformer((OrdinalEncoder(categories=ordinalCategories), ordinalColumns))
 
 encodedData = encoder.fit_transform(totalDataset)
 
-# Removed "sloss", "trans-depth", "ct-ftp-cmd", "is-ftp-login", "Label" and "ct-flow-http-mthd" as they were unused in the model I am replicating
-unchangedColumns = ["dsport", "dur", "sbytes", "dbytes", "Sload", "Dload", "Spkts", "Dpkts", "swin", "dwin", "smeansz", "dmeansz", "Sjit", "Djit", "Stime", "Ltime", "Sintpkt", "Dintpkt", "synack", "ackdat"]
+unchangedColumns = ["dsport", "dur", "sbytes", "dbytes", "Spkts", "Dpkts", "swin", "dwin", "smeansz", "dmeansz", "Sintpkt", "Dintpkt", 'Flow IAT Mean', 'Flow Bytes/s', 'tcprtt']
 unchangedData = totalDataset[unchangedColumns].values
 
 totalEncodedData = np.concatenate((unchangedData, encodedData), axis=1)
@@ -53,7 +61,7 @@ totalEncodedColumns = unchangedColumns + ordinalColumns
 
 totalDataFrame = pandas.DataFrame(totalEncodedData, columns=totalEncodedColumns)
 
-columnsToNormalise = [col for col in totalDataFrame.columns if col != 'is_sm_ips_ports' and col != 'attack_cat']
+columnsToNormalise = [col for col in totalDataFrame.columns if col != 'attack_cat']
 totalDataFrame[columnsToNormalise] = MinMaxScaler().fit_transform(totalDataFrame[columnsToNormalise])
 
 print(totalDataFrame.shape)

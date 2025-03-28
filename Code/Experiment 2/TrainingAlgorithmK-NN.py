@@ -10,25 +10,25 @@ import matplotlib.pyplot as plt
 import matplotlib.backends.backend_agg as agg
 
 # Load data
-trainingData = pandas.read_csv("Data for ML/NSL-KDD/KDD_DataFrame.csv")
+trainingData = pandas.read_csv("Data for ML/UNSW-NB15/UNSW-NB15_DataFrame.csv")
 
 # Define the inputs and targets
-target = trainingData['class'].values.astype(float)
+target = trainingData['attack_cat'].values.astype(float)
 
 # Correlation Based Feature Selection
 corr_matrix = trainingData.corr()
-corr_with_target = corr_matrix['class']
+corr_with_target = corr_matrix['attack_cat']
 
-k = 30
+k = 10
 top_k = corr_with_target.abs().sort_values(ascending=False)[:k].index
 selected_features = trainingData[top_k]
 print(selected_features.columns)
 
 selected_DF = trainingData[selected_features.columns]
-target = selected_DF['class']
+target = selected_DF['attack_cat']
 
 # Data split
-input_training, input_test, target_training, target_test = train_test_split(selected_DF.drop(columns='class'), target, test_size=0.1, random_state=42)
+input_training, input_test, target_training, target_test = train_test_split(selected_DF.drop(columns='attack_cat'), target, test_size=0.1, random_state=42)
 
 # Not using an Random Forest for project but it is being used as a test
 KNNAttackClassifier = KNeighborsClassifier(n_neighbors=10, weights='distance', leaf_size = 30)
@@ -56,7 +56,7 @@ for i in range(5):
     old_test_input = input_test
     old_test_target = target_test
     ran_state_val = random.randint(30, 70)
-    input_training, input_test, target_training, target_test = train_test_split(selected_DF.drop(columns='class'), target, test_size=0.1, random_state=ran_state_val)
+    input_training, input_test, target_training, target_test = train_test_split(selected_DF.drop(columns='attack_cat'), target, test_size=0.1, random_state=ran_state_val)
     
 #Overall statistics
 AllAttacks = np.concatenate(AllAttacks, axis=0)

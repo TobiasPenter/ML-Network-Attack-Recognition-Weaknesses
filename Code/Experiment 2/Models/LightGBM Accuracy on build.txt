@@ -1,0 +1,65 @@
+Accuracy Score:  0.9702249955709533 
+Precision Score:  0.9702249955709533 
+Recall Score: 0.9702249955709533
+F1 Score:  0.9702249955709533 
+Mean Square Error:  0.725584142044448 
+Mean Absolute Error:  0.12955650479321273 
+R2 Score:  0.5849219328986268 
+
+
+
+[LightGBM] [Warning] lambda_l1 is set=0.1, reg_alpha=0.0 will be ignored. Current value: lambda_l1=0.1
+[LightGBM] [Warning] lambda_l2 is set=0.2, reg_lambda=0.0 will be ignored. Current value: lambda_l2=0.2
+Accuracy Score:  0.9706816794944981 
+Precision Score:  0.9706816794944981 
+Recall Score: 0.9706816794944981
+F1 Score:  0.9706816794944981 
+Mean Square Error:  0.7168559674022165
+Mean Absolute Error:  0.12813527292769827 
+R2 Score:  0.587936596140363
+
+
+
+[LightGBM] [Warning] lambda_l1 is set=0.1, reg_alpha=0.0 will be ignored. Current value: lambda_l1=0.1
+[LightGBM] [Warning] lambda_l2 is set=0.2, reg_lambda=0.0 will be ignored. Current value: lambda_l2=0.2
+Accuracy Score:  0.9707643550323812 
+Precision Score:  0.9707643550323812 
+Recall Score: 0.9707643550323812
+F1 Score:  0.9707643550323812 
+Mean Square Error:  0.7101592488336844 
+Mean Absolute Error:  0.12724946359323636
+R2 Score:  0.5932912052821886 
+
+
+
+[LightGBM] [Warning] lambda_l1 is set=0.1, reg_alpha=0.0 will be ignored. Current value: lambda_l1=0.1
+[LightGBM] [Warning] lambda_l2 is set=0.2, reg_lambda=0.0 will be ignored. Current value: lambda_l2=0.2
+Accuracy Score:  0.970567508513612 
+Precision Score:  0.970567508513612 
+Recall Score: 0.970567508513612
+F1 Score:  0.970567508513612 
+Mean Square Error:  0.7125568394322946 
+Mean Absolute Error:  0.1278124446369166 
+R2 Score:  0.5940162756054873 
+
+
+
+[LightGBM] [Warning] lambda_l1 is set=0.1, reg_alpha=0.0 will be ignored. Current value: lambda_l1=0.1
+[LightGBM] [Warning] lambda_l2 is set=0.2, reg_lambda=0.0 will be ignored. Current value: lambda_l2=0.2
+Accuracy Score:  0.9706580579122458 
+Precision Score:  0.9706580579122458 
+Recall Score: 0.9706580579122458
+F1 Score:  0.9706580579122458 
+Mean Square Error:  0.7104742032637152 
+Mean Absolute Error:  0.12748567941575953
+R2 Score:  0.5984282398262636
+
+
+
+Total Accuracy Score:  0.9705793193047381 
+Total Precision Score:  0.9705793193047381 
+Total Recall Score: 0.9705793193047381
+Total F1 Score:  0.9705793193047381 
+Total Mean Square Error:  0.7151260801952718 
+Total Mean Absolute Error:  0.1280478730733647
+Total R2 Score:  0.5917421104570485
