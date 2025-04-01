@@ -1,0 +1,67 @@
+[LightGBM] [Warning] lambda_l1 is set=0.1, reg_alpha=0.0 will be ignored. Current value: lambda_l1=0.1
+[LightGBM] [Warning] lambda_l2 is set=0.2, reg_lambda=0.0 will be ignored. Current value: lambda_l2=0.2
+Accuracy Score:  0.29948721375002085 
+Precision Score:  0.29948721375002085 
+Recall Score: 0.29948721375002085
+F1 Score:  0.29948721375002085
+Mean Square Error:  9.978224980396387
+Mean Absolute Error:  2.1108722512621023
+R2 Score:  -1.5336426885947083
+
+
+
+[LightGBM] [Warning] lambda_l1 is set=0.1, reg_alpha=0.0 will be ignored. Current value: lambda_l1=0.1
+[LightGBM] [Warning] lambda_l2 is set=0.2, reg_lambda=0.0 will be ignored. Current value: lambda_l2=0.2
+Accuracy Score:  0.29996347882065033 
+Precision Score:  0.29996347882065033 
+Recall Score: 0.29996347882065033
+F1 Score:  0.29996347882065033
+Mean Square Error:  9.977893626309333
+Mean Absolute Error:  2.110415397943167
+R2 Score:  -1.5386404542207508
+
+
+
+[LightGBM] [Warning] lambda_l1 is set=0.1, reg_alpha=0.0 will be ignored. Current value: lambda_l1=0.1
+[LightGBM] [Warning] lambda_l2 is set=0.2, reg_lambda=0.0 will be ignored. Current value: lambda_l2=0.2
+Accuracy Score:  0.29930257639088587 
+Precision Score:  0.29930257639088587 
+Recall Score: 0.29930257639088587
+F1 Score:  0.29930257639088587
+Mean Square Error:  9.980692981478029
+Mean Absolute Error:  2.111476724181129
+R2 Score:  -1.5369299050898322
+
+
+
+[LightGBM] [Warning] lambda_l1 is set=0.1, reg_alpha=0.0 will be ignored. Current value: lambda_l1=0.1
+[LightGBM] [Warning] lambda_l2 is set=0.2, reg_lambda=0.0 will be ignored. Current value: lambda_l2=0.2
+Accuracy Score:  0.29999237073014823 
+Precision Score:  0.29999237073014823 
+Recall Score: 0.29999237073014823
+F1 Score:  0.29999237073014823
+Mean Square Error:  9.976513134758637
+Mean Absolute Error:  2.1100903639613153
+R2 Score:  -1.5329730383786617
+
+
+
+[LightGBM] [Warning] lambda_l1 is set=0.1, reg_alpha=0.0 will be ignored. Current value: lambda_l1=0.1
+[LightGBM] [Warning] lambda_l2 is set=0.2, reg_lambda=0.0 will be ignored. Current value: lambda_l2=0.2
+Accuracy Score:  0.29942581844233784 
+Precision Score:  0.29942581844233784 
+Recall Score: 0.29942581844233784
+F1 Score:  0.29942581844233784
+Mean Square Error:  9.97436655617016
+Mean Absolute Error:  2.110622607106597
+R2 Score:  -1.5352568292726745
+
+
+
+Total Accuracy Score:  0.2996342916268086 
+Total Precision Score:  0.2996342916268086 
+Total Recall Score: 0.2996342916268086
+Total F1 Score:  0.2996342916268086
+Total Mean Square Error:  9.977538255822509
+Total Mean Absolute Error:  2.1106954688908623
+Total R2 Score:  -1.5354865929928003
