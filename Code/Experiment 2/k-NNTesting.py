@@ -14,24 +14,24 @@ import matplotlib.backends.backend_agg as agg
 model_For_Testing = pickle.load(open('Models/KNNModel.pk1', 'rb'))
 
 # Load data
-trainingData = pandas.read_csv("Data for ML/NSL-KDD/KDD_DataFrame.csv")
-trainingDataColumns = ['class', 'dst_host_srv_count', 'logged_in', 'dst_host_diff_srv_rate','dst_host_same_srv_rate', 'diff_srv_rate', 'flag','dst_host_srv_rerror_rate', 'same_srv_rate', 'rerror_rate','srv_rerror_rate', 'dst_host_same_src_port_rate','dst_host_rerror_rate', 'dst_host_srv_diff_host_rate', 'count','dst_host_srv_serror_rate', 'protocol_type', 'dst_host_serror_rate','serror_rate', 'srv_serror_rate', 'service', 'duration','dst_host_count', 'srv_diff_host_rate', 'srv_count','num_failed_logins', 'is_guest_login', 'num_access_files','wrong_fragment', 'num_shells']
+trainingData = pandas.read_csv("Data for ML/UNSW-NB15/UNSW-NB15_DataFrame.csv")
+trainingDataColumns = ['attack_cat', 'swin', 'dwin', 'dmeansz', 'dsport', 'Flow Bytes/s', 'proto', 'Spkts', 'Dpkts', 'tcprtt']
 trainingData = trainingData[trainingDataColumns]
 
 # Testing with Random Data|
 print ("Testing with Random data")
 # Gerate Random Data
-numRows = len(trainingData['class'])
+numRows = len(trainingData['attack_cat'])
 columnNames = trainingData.columns
 randomData = np.random.rand(numRows, len(columnNames) - 1)
 attackCatData = np.random.randint(0, 14, size=(numRows, 1))
 randomDataFull = np.concatenate((randomData, attackCatData), axis=1)
 randomDF = pd.DataFrame(randomDataFull, columns=columnNames)
 
-target = randomDF['class'].values.astype(int)
+target = randomDF['attack_cat'].values.astype(int)
 
 # Data split
-input_training, input_test, target_training, target_test = train_test_split(randomDF.drop(columns='class'), target, test_size=0.2, random_state=42)
+input_training, input_test, target_training, target_test = train_test_split(randomDF.drop(columns='attack_cat'), target, test_size=0.2, random_state=42)
 
 AllPredictions= []
 AllAttacks = []
@@ -54,7 +54,7 @@ for i in range(5):
     
     # Resplit data
     ran_state_val = random.randint(30, 70)
-    input_training, input_test, target_training, target_test = train_test_split(randomDF.drop(columns='class'), target, test_size=0.2, random_state=ran_state_val)
+    input_training, input_test, target_training, target_test = train_test_split(randomDF.drop(columns='attack_cat'), target, test_size=0.2, random_state=ran_state_val)
     
 # Overall statisticss 
 AllAttacks = np.concatenate(AllAttacks, axis=0)
@@ -73,10 +73,10 @@ print("Total Accuracy Score: ",accuracy,"\nTotal Precision Score: ", precision,"
 # Testing with dataset
 print("Testing with Dataset")
 # Define the inputs and targets
-target = trainingData['class'].values.astype(int)
+target = trainingData['attack_cat'].values.astype(int)
 
 # Data split
-input_training, input_test, target_training, target_test = train_test_split(trainingData.drop(columns='class'), target, test_size=0.2, random_state=42)
+input_training, input_test, target_training, target_test = train_test_split(trainingData.drop(columns='attack_cat'), target, test_size=0.2, random_state=42)
 
 AllPredictions= []
 AllAttacks = []
@@ -99,7 +99,7 @@ for i in range(5):
     
     # Resplit data
     ran_state_val = random.randint(30, 70)
-    input_training, input_test, target_training, target_test = train_test_split(trainingData.drop(columns='class'), target, test_size=0.2, random_state=ran_state_val)
+    input_training, input_test, target_training, target_test = train_test_split(trainingData.drop(columns='attack_cat'), target, test_size=0.2, random_state=ran_state_val)
    
 # Overall statisticss 
 AllAttacks = np.concatenate(AllAttacks, axis=0)
@@ -123,19 +123,19 @@ background_sample = shap.sample(input_test, 10000)
 
 explainer = shap.Explainer(model_For_Testing.predict_proba, background_sample)
 
-shap_values = explainer.shap_values(background_sample)
+shap_values = explainer(background_sample).values
 
 shap_values = np.transpose(shap_values.transpose(1, 0, 2))
 
-# Shape values for each class
-for i, class_shap_values in enumerate(shap_values):
-    print(f"Generating summary plot for class {i}")
-    summary_plot = shap.summary_plot(class_shap_values, background_sample, feature_names=background_sample.columns, show=False)
+# Shape values for each attack_cat
+for i, attack_cat_shap_values in enumerate(shap_values):
+    print(f"Generating summary plot for attack_cat {i}")
+    summary_plot = shap.summary_plot(attack_cat_shap_values, background_sample, feature_names=background_sample.columns, show=False)
     
     fig = plt.gcf()
 
     # Use agg backend to save it as PNG
-    png_file_path = f"Explainer Charts/Summary/On Build/Model 1/shap_plot_class{i}.png"
+    png_file_path = f"Explainer Charts/Summary/On Build/Model 1/shap_plot_attack_cat{i}.png"
     agg_backend = agg.FigureCanvasAgg(fig)
     agg_backend.print_png(png_file_path)
     plt.close(fig)

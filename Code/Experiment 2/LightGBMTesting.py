@@ -21,7 +21,7 @@ target = trainingData['attack_cat'].values.astype(float)
 input_training, input_test, target_training, target_test = train_test_split(trainingData.drop(columns='attack_cat'), target, test_size=0.2, random_state=42)
 
 #Load Model
-model_For_Testing = pickle.load(open('Models/MLPModel.pk1', 'rb'))
+model_For_Testing = pickle.load(open('Models/LightGBM.pk1', 'rb'))
 
 AllPredictions= []
 AllAttacks = []

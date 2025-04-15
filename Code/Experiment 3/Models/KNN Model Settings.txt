@@ -1,0 +1,10 @@
+Model 1 Under fit
+n_neighbors=10, weights='distance', leaf_size = 30, algorithm='ball_tree'
+
+
+Model 2
+KNNAttackClassifier = KNeighborsClassifier(n_neighbors=1000, weights='distance', leaf_size = 100)
+
+
+Model 3 (Uses all columns)
+n_neighbors=10, weights='distance', leaf_size = 30)

@@ -1,0 +1,7 @@
+Model 1 Under fit
+boosting_type = 'gbdt', objective = 'multiclass', num_class = num_classes, learning_rate = 0.1, n_estimators=50, subsample_for_bin=200000, min_split_gain=0.2, min_child_samples=20, max_depth=5, num_leaves=50, reg_alpha=0.1, reg_lambda=0.2
+
+Model 2 Massive Under Fit
+
+Model 3
+LightGBM = LGBMClassifier(boosting_type = 'gbdt', objective = 'multiclass', num_class = num_classes, learning_rate = 0.5, reg_alpha=0.1, reg_lambda=0.2)

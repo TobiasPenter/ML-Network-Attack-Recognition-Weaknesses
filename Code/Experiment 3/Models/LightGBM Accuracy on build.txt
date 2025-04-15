@@ -1,0 +1,179 @@
+Model 1 Under fit
+Accuracy Score:  0.9679966929784847 
+Precision Score:  0.9679966929784847 
+Recall Score: 0.9679966929784847
+F1 Score:  0.9679966929784847
+Mean Square Error:  0.7874096966595145
+Mean Absolute Error:  0.14064290073030059
+R2 Score:  0.5495539718034679
+
+
+
+Accuracy Score:  0.9678313419027185 
+Precision Score:  0.9678313419027185 
+Recall Score: 0.9678313419027185
+F1 Score:  0.9678313419027185
+Mean Square Error:  0.7852798173264306
+Mean Absolute Error:  0.1407885671541899
+R2 Score:  0.5490527870501535
+
+
+
+Accuracy Score:  0.9672841085805397 
+Precision Score:  0.9672841085805397 
+Recall Score: 0.9672841085805397
+F1 Score:  0.9672841085805397
+Mean Square Error:  0.8193067065608944
+Mean Absolute Error:  0.14522548768725024
+R2 Score:  0.5332257252748669
+
+
+
+Accuracy Score:  0.9677880356685892 
+Precision Score:  0.9677880356685892 
+Recall Score: 0.9677880356685892
+F1 Score:  0.9677880356685892
+Mean Square Error:  0.7843743233400917
+Mean Absolute Error:  0.14076494557193756
+R2 Score:  0.5523262009492236
+
+
+
+Accuracy Score:  0.9672604869982875 
+Precision Score:  0.9672604869982875 
+Recall Score: 0.9672604869982875
+F1 Score:  0.9672604869982875
+Mean Square Error:  0.8026023109781304
+Mean Absolute Error:  0.14352079683470798
+R2 Score:  0.5347788822526338
+
+
+Total Accuracy Score:  0.967632133225724 
+Total Precision Score:  0.967632133225724 
+Total Recall Score: 0.967632133225724
+Total F1 Score:  0.967632133225724
+Total Mean Square Error:  0.7957945709730123
+Total Mean Absolute Error:  0.14218853959567726
+Total R2 Score:  0.5438037214497995
+
+
+
+
+Model2 On Build
+Accuracy Score:  0.9509 
+Precision Score:  0.9509 
+Recall Score: 0.9509 
+F1 Score:  0.9509
+Mean Square Error:  1.48215 
+Mean Absolute Error:  0.2492 
+R2 Score:  0.16612148303602192 
+
+
+
+Accuracy Score:  0.949575 
+Precision Score:  0.949575 
+Recall Score: 0.949575 
+F1 Score:  0.949575 
+Mean Square Error:  1.464175 
+Mean Absolute Error:  0.249925 
+R2 Score:  0.16048360597959643 
+
+
+
+Accuracy Score:  0.9484 
+Precision Score:  0.9484 
+Recall Score: 0.9484
+F1 Score:  0.9484 
+Mean Square Error:  1.506425 
+Mean Absolute Error:  0.256125
+R2 Score:  0.15450662168719165 
+
+
+
+Accuracy Score:  0.94865 
+Precision Score:  0.94865 
+Recall Score: 0.94865 
+F1 Score:  0.94865 
+Mean Square Error:  1.4821 
+Mean Absolute Error:  0.25345
+R2 Score:  0.1667603623209971 
+
+
+
+Accuracy Score:  0.9482 
+Precision Score:  0.9482 
+Recall Score: 0.9482 
+F1 Score:  0.9482 
+Mean Square Error:  1.523375 
+Mean Absolute Error:  0.258375 
+R2 Score:  0.153830604894013 
+
+
+
+Total Accuracy Score:  0.949145 
+Total Precision Score:  0.949145 
+Total Recall Score: 0.949145 
+Total F1 Score:  0.949145 
+Total Mean Square Error:  1.491645 
+Total Mean Absolute Error:  0.253415 
+Total R2 Score:  0.16033202015602344
+
+
+Model 3
+Accuracy Score:  0.9644770772228893 
+Precision Score:  0.9644770772228893 
+Recall Score: 0.9644770772228893
+F1 Score:  0.9644770772228893
+Mean Square Error:  0.8587941182260191
+Mean Absolute Error:  0.15391035609535245
+R2 Score:  0.5087177599735253
+
+
+
+Accuracy Score:  0.9644652664317631 
+Precision Score:  0.9644652664317631 
+Recall Score: 0.9644652664317631
+F1 Score:  0.9644652664317631
+Mean Square Error:  0.855164268419913
+Mean Absolute Error:  0.15364264482982617
+R2 Score:  0.5143264843563786
+
+
+
+Accuracy Score:  0.964851085608551 
+Precision Score:  0.964851085608551 
+Recall Score: 0.964851085608551
+F1 Score:  0.964851085608551
+Mean Square Error:  0.8408338418535068
+Mean Absolute Error:  0.1512568650223421
+R2 Score:  0.5184537567597387
+
+
+
+Accuracy Score:  0.9652487155764651 
+Precision Score:  0.9652487155764651 
+Recall Score: 0.9652487155764651
+F1 Score:  0.9652487155764651
+Mean Square Error:  0.8340150784433378
+Mean Absolute Error:  0.15020176768173854
+R2 Score:  0.5242188142967996
+
+
+
+Accuracy Score:  0.9640400779512215 
+Precision Score:  0.9640400779512215 
+Recall Score: 0.9640400779512215
+F1 Score:  0.9640400779512215
+Mean Square Error:  0.8535816224090077
+Mean Absolute Error:  0.15402059014586328
+R2 Score:  0.5105390535166758
+
+
+
+Total Accuracy Score:  0.964616444558178 
+Total Precision Score:  0.964616444558178 
+Total Recall Score: 0.964616444558178
+Total F1 Score:  0.964616444558178
+Total Mean Square Error:  0.8484777858703569
+Total Mean Absolute Error:  0.1526064447550245
+Total R2 Score:  0.5152572033266161
